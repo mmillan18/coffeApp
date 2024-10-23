@@ -1,9 +1,9 @@
-name: Deploy to Heroku
+name: Deploy Static Website to Heroku
 
 on:
   push:
     branches:
-      - master  # O "main" si es tu rama principal
+      - master # Cambia a main si tu rama principal se llama main
 
 jobs:
   deploy:
@@ -13,23 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Heroku CLI
+      - name: Install Heroku CLI # Instalar Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Set Git User  # Configurar nombre y correo para Git
+      - name: Set up Git # Configurar nombre y correo para Git
         run: |
-          git config --global user.email "2220211035@estudiantesunibague.edu.com"  # Reemplaza con tu email
+          git config --global user.email "2220211035@estudiantesunibague.edu.co"  # Reemplaza con tu email
           git config --global user.name "mmillan18"  # Reemplaza con tu nombre
 
-      - name: Authenticate with Heroku
-        run: heroku auth:token
+      - name: Deploy to Heroku # Desplegar a Heroku usando Heroku CLI
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
-      - name: Build and Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} # Usa el API Key de Heroku guardado en los secretos
         run: |
           git init
           heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
