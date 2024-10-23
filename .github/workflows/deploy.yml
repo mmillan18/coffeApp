@@ -25,6 +25,5 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          git add .
-          git commit -m "Deploying static website"
+          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
           git push heroku master
