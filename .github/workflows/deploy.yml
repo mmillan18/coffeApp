@@ -3,7 +3,7 @@ name: Deploy Static Website to Heroku
 on:
   push:
     branches:
-      - master # Cambia a main si tu rama principal se llama main
+      - master # O main, si tu rama principal es "main"
 
 jobs:
   deploy:
@@ -13,14 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Heroku CLI # Instalar Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: Set up Git # Configurar nombre y correo para Git
-        run: |
-          git config --global user.email "2220211035@estudiantesunibague.edu.co"  # Reemplaza con tu email
-          git config --global user.name "mmillan18"  # Reemplaza con tu nombre
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: Deploy to Heroku # Desplegar a Heroku usando Heroku CLI
         env:
@@ -30,4 +24,4 @@ jobs:
           heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
           git add .
           git commit -m "Deploying to Heroku"
-          git push -f heroku master
+          git push -f heroku master  # Forzar el push a Heroku
