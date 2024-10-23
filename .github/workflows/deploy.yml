@@ -17,6 +17,11 @@ jobs:
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
+      - name: Set Git User  # Configurar nombre y correo para Git
+        run: |
+          git config --global user.email "2220211035@estudiantesunibague.edu.com"  # Reemplaza con tu email
+          git config --global user.name "mmillan18"  # Reemplaza con tu nombre
+
       - name: Authenticate with Heroku
         run: heroku auth:token
         env:
