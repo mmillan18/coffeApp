@@ -3,21 +3,26 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - master  # Asegúrate de que estás haciendo push a la rama correcta
+      - master  # O "main" si es tu rama principal
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Heroku CLI  # Instalar Heroku CLI
+      - name: Install Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Deploy to Heroku  # Desplegar a Heroku usando Heroku CLI
+      - name: Authenticate with Heroku
+        run: heroku auth:token
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
