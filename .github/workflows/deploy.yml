@@ -13,15 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Heroku CLI
+      - name: Set up Git identity # Configurar la identidad de Git temporalmente
+        run: |
+          git config --global user.email "2220211035@estudiantesunibague.edu.co"
+          git config --global user.name "mmillan18"
+
+      - name: Install Heroku CLI # Instalar Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Deploy to Heroku # Desplegar a Heroku usando Heroku CLI
+      - name: Deploy to Heroku # Desplegar la página estática a Heroku
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} # Usa el API Key de Heroku guardado en los secretos
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          git init
-          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
           git add .
-          git commit -m "Deploying to Heroku"
-          git push -f heroku master  # Forzar el push a Heroku
+          git commit -m "Deploying static website"
+          git push heroku master
