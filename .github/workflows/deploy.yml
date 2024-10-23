@@ -22,9 +22,12 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
-      - name: Deploy to Heroku
+      - name: Build and Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
+          git init
           heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
-          git push heroku master
+          git add .
+          git commit -m "Deploying to Heroku"
+          git push -f heroku master
